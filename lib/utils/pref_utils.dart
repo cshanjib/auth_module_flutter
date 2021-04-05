@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:auth_module_flutter/blocs/token/token_cubit.dart';
+import 'package:auth_module_flutter/data/models/user.dart';
 import 'package:auth_module_flutter/data/models/user_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -21,6 +22,10 @@ abstract class PrefUtils {
 
   static UserAuth getUserAuthData() {
     return authStore[AUTH_STORE.auth];
+  }
+
+  static User getStoredUser() {
+    return authStore[AUTH_STORE.user];
   }
 
   static Future<void> loadUserAuthData() async {
