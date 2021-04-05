@@ -1,3 +1,4 @@
+import 'package:auth_module_flutter/blocs/token/token_cubit.dart';
 import 'package:auth_module_flutter/data/models/user_auth.dart';
 import 'package:auth_module_flutter/data/repositories/user_repository.dart';
 import 'package:auth_module_flutter/utils/pref_utils.dart';
@@ -12,9 +13,12 @@ part 'auth_state.dart';
 @injectable
 class AuthCubit extends Cubit<AuthState> {
   final UserRepository _userRepository;
+  final TokenCubit _tokenCubit;
 
-  AuthCubit({UserRepository userRepository})
+  AuthCubit(
+      {UserRepository userRepository, @factoryParam TokenCubit tokenCubit})
       : this._userRepository = userRepository,
+        this._tokenCubit = tokenCubit,
         super(AuthState.initial());
 
   void login(username, password) async {
@@ -22,7 +26,7 @@ class AuthCubit extends Cubit<AuthState> {
       emit(state.update(loading: true));
 
       UserAuth _auth = await _userRepository.handleLogin(username, password);
-      PrefUtils.storeUserAuthData(_auth);
+      PrefUtils.loggedIn(_auth, _tokenCubit);
       emit(state.update(loading: false, success: true));
     } catch (e) {
       emit(state.update(loading: false, error: e.toString()));

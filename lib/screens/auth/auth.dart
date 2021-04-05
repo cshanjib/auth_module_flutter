@@ -1,3 +1,4 @@
+import 'package:auth_module_flutter/blocs/token/token_cubit.dart';
 import 'package:auth_module_flutter/screens/auth/bloc/auth_cubit.dart';
 import 'package:auth_module_flutter/screens/form/custom_button.dart';
 import 'package:auth_module_flutter/screens/form/custom_text_field.dart';
@@ -65,7 +66,8 @@ class _LoginFormState extends State<LoginForm> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => GetIt.instance.get<AuthCubit>(),
+      create: (context) =>
+          GetIt.instance.get<AuthCubit>(param1: context.read<TokenCubit>()),
       child: BlocListener<AuthCubit, AuthState>(
         listener: _authListeners,
         listenWhen: (c, state) => state.hasError || state.success,

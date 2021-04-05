@@ -1,3 +1,4 @@
+import 'package:auth_module_flutter/data/models/user.dart';
 import 'package:auth_module_flutter/data/models/user_auth.dart';
 import 'package:auth_module_flutter/data/providers/user_api_provider.dart';
 import 'package:injectable/injectable.dart';
@@ -11,5 +12,9 @@ class UserRepository {
 
   Future<UserAuth> handleLogin(String username, String password) {
     return _provider.login(username, password);
+  }
+
+  Future<User> handleGetUser() {
+    return _provider.getUser();
   }
 }

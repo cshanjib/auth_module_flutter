@@ -1,6 +1,8 @@
 import 'dart:convert';
+import 'package:auth_module_flutter/blocs/token/token_cubit.dart';
 import 'package:auth_module_flutter/data/models/user_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class PrefUtils {
@@ -61,17 +63,15 @@ abstract class PrefUtils {
     }
   }
 
-  static void loggedIn(UserAuth userAuthData, tokenCubit) async {
+  static void loggedIn(UserAuth userAuthData, TokenCubit cubit) async {
     await storeUserAuthData(userAuthData);
-    // authTokenCubit.update(isLoggedIn: true, userAuth: userAuthData);
-    // authTokenCubit.loadUserData(loadRequired: true);
+    cubit.update(isLoggedIn: true, userAuth: userAuthData);
+    cubit.loadUserData();
   }
 
   static void loggedOut(BuildContext context) async {
     await clearUserToken();
-    // context.read<AuthTokenCubit>().reset();
-    // context.read<FamilyCubit>().reset();
-    // context.read<AddressCubit>().reset();
+    context.read<TokenCubit>().reset();
   }
 }
 

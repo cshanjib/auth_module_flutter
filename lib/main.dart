@@ -1,10 +1,12 @@
 import 'package:auth_module_flutter/config/injectable.dart';
 import 'package:auth_module_flutter/utils/dialog_utils.dart';
+import 'package:auth_module_flutter/utils/pref_utils.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   configureDependencies();
+  await PrefUtils.loadUserAuthData();
   runApp(MyApp());
 }
 
