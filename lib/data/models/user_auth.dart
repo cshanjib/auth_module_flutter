@@ -7,10 +7,11 @@ part 'user_auth.g.dart';
 @JsonSerializable()
 class UserAuth {
   final String accessToken;
+  final String userId;
   final String refreshToken;
   final List<String> roles;
 
-  UserAuth({this.accessToken, this.refreshToken, this.roles});
+  UserAuth({this.accessToken, this.refreshToken, this.roles, this.userId});
 
   factory UserAuth.fromJson(Map<String, dynamic> json) =>
       _$UserAuthFromJson(json);

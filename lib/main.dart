@@ -1,6 +1,10 @@
+import 'package:auth_module_flutter/config/injectable.dart';
+import 'package:auth_module_flutter/utils/dialog_utils.dart';
 import 'package:flutter/material.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  configureDependencies();
   runApp(MyApp());
 }
 
@@ -31,7 +35,7 @@ class MyHomePage extends StatelessWidget {
       appBar: AppBar(
         title: Text(_title),
       ),
-      drawer: _appDrawer(),
+      drawer: _appDrawer(context),
       body: ListView(
         children: <Widget>[
           _block(title: 'This should be always visible'),
@@ -48,12 +52,13 @@ class MyHomePage extends StatelessWidget {
     );
   }
 
-  Widget _appDrawer() {
+  Widget _appDrawer(BuildContext context) {
     return Drawer(
       child: Column(
         children: [
           ListTile(
             title: Text("Login"),
+            onTap: () => _login(context),
           ),
           Divider(
             height: 0,
@@ -64,6 +69,11 @@ class MyHomePage extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  _login(BuildContext context) {
+    Navigator.of(context).pop();
+    DialogUtils.showAuthDialog(context);
   }
 
   Widget _block({String title, Color color: Colors.red}) {
