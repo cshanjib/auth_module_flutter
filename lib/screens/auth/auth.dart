@@ -57,6 +57,8 @@ class _LoginFormState extends State<LoginForm> {
         content: Text(state.error),
         backgroundColor: Colors.red,
       ));
+    } else if (state.success) {
+      Navigator.of(context).pop();
     }
   }
 
@@ -66,7 +68,7 @@ class _LoginFormState extends State<LoginForm> {
       create: (context) => GetIt.instance.get<AuthCubit>(),
       child: BlocListener<AuthCubit, AuthState>(
         listener: _authListeners,
-        listenWhen: (c, state) => state.hasError,
+        listenWhen: (c, state) => state.hasError || state.success,
         child: BlocBuilder<AuthCubit, AuthState>(builder: (context, state) {
           return Padding(
             padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
