@@ -11,11 +11,13 @@ UserAuth _$UserAuthFromJson(Map<String, dynamic> json) {
     accessToken: json['accessToken'] as String,
     refreshToken: json['refreshToken'] as String,
     roles: (json['roles'] as List)?.map((e) => e as String)?.toList(),
+    userId: json['userId'] as String,
   );
 }
 
 Map<String, dynamic> _$UserAuthToJson(UserAuth instance) => <String, dynamic>{
       'accessToken': instance.accessToken,
+      'userId': instance.userId,
       'refreshToken': instance.refreshToken,
       'roles': instance.roles,
     };
